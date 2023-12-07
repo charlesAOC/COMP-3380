@@ -33,15 +33,15 @@ def createTables():
     pass
 
 
-# Function creates the companies table
 def createCompaniesTable():
+    # Function creates the companies table
     cursor.execute("""
                    CREATE TABLE Companies (
                        company_id INTEGER NOT NULL,
                        name TEXT NOT NULL,
-                       company_size INTEGER NOT NULL,
-                       city_id INTEGER NOT NULL,
-                       address TEXT NOT NULL,
+                       company_size INTEGER,
+                       city_id INTEGER,
+                       address TEXT,
                        industry_id INTEGER NOT NULL,
                        employee_count INTEGER NOT NULL,
                        follower_count INTEGER NOT NULL,
@@ -54,8 +54,8 @@ def createCompaniesTable():
     database.commit()
 
 
-# Function creates the company industry table
 def createIndustriesTable():
+    # Function creates the company industry table
     cursor.execute("""
                    CREATE TABLE Industries (
                        industry_id INTEGER NOT NULL,
@@ -66,8 +66,8 @@ def createIndustriesTable():
     database.commit()
 
 
-# Function creates the cities table
 def createCitiesTable():
+    # Function creates the cities table
     cursor.execute("""
                    CREATE TABLE Cities (
                        cities_id INTEGER NOT NULL,
@@ -79,10 +79,9 @@ def createCitiesTable():
                    """)
     database.commit()
 
-# Function creates the states table
-
 
 def createStatesTable():
+    # Function creates the states table
     cursor.execute("""
                    CREATE TABLE States (
                        states_id INTEGER NOT NULL,
@@ -94,10 +93,9 @@ def createStatesTable():
                    """)
     database.commit()
 
-# Function creates the Countries table
-
 
 def createCountriesTable():
+    # Function creates the Countries table
     cursor.execute("""
                    CREATE TABLE Countries (
                        country_id INTEGER NOT NULL,
@@ -107,12 +105,9 @@ def createCountriesTable():
                    """)
     database.commit()
 
-# <----------------------------------------------------------------
-# TODO: primary key
-# Function creates the company speciality table
-
 
 def createCompanySpecialtyTable():
+    # Function creates the company speciality table
     cursor.execute("""
                    CREATE TABLE Company_Speciality (
                        company_id INTEGER NOT NULL,             
@@ -122,12 +117,11 @@ def createCompanySpecialtyTable():
                    );
                    """)
     database.commit()
-# <----------------------------------------------------------------
-
-# Function creates the job postings table
 
 
 def createJobPostingsTable():
+    # Function creates the job postings table
+
     cursor.execute("""
                    CREATE TABLE Job_Postings (
                        job_id INTEGER NOT NULL,
@@ -159,10 +153,8 @@ def createJobPostingsTable():
     database.commit()
 
 
-# <----------------------------------------------------------------
-# TODO: primary key
-# Function creates the job industries table
 def createJobIndustryTable():
+    # Function creates the job industries table
     cursor.execute("""
                    CREATE TABLE Job_Industry (
                        job_id INTEGER NOT NULL,
@@ -173,16 +165,14 @@ def createJobIndustryTable():
                    );
                    """)
     database.commit()
-# <----------------------------------------------------------------
-
-# Function creates the job benefits table
 
 
 def createJobBenefitsTable():
+    # Function creates the job benefits table
     cursor.execute("""
                    CREATE TABLE Job_Benefits (
                        job_id INTEGER NOT NULL,            
-                       inferred TEXT NOT NULL,
+                       inferred INTEGER NOT NULL,
                        type TEXT NOT NULL,
                        PRIMARY KEY(job_id),
                        FOREIGN KEY(job_id) REFERENCES Job_Postings(job_id)
@@ -190,10 +180,9 @@ def createJobBenefitsTable():
                    """)
     database.commit()
 
-# Function creates the job skills table
-
 
 def createJobSkillsTable():
+    # Function creates the job skills table
     cursor.execute("""
                    CREATE TABLE Job_Skills (
                        job_id INTEGER NOT NULL,             
