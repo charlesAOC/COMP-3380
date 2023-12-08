@@ -8,17 +8,19 @@ cursor = database.cursor()
 
 
 def insertTables():
-    # insertIndustriesTable()
-    # insertCountriesTable()
-    # insertStatesTable()
-    # insertCitiesTable()
-    # insertCompanyIndustriesTable()
-    # insertCompanyCountsTable()
-    # insertCompaniesTable()
-    # insertCompanySpecialtyTable()
-    # insertSalariesTable()
-
+    insertIndustriesTable()
+    insertCountriesTable()
+    insertStatesTable()
+    insertCitiesTable()
+    insertCompanyIndustriesTable()
+    insertCompanyCountsTable()
+    insertCompaniesTable()
+    insertCompanySpecialtyTable()
+    insertSalariesTable()
     insertJobPostingsTable()
+    insertJobIndustryTable()
+    insertJobBenefitsTable()
+    insertJobSkillsTable()
 
     pass
 
@@ -358,17 +360,36 @@ def insertJobPostingsTable():
 
 def insertJobIndustryTable():
     # Function creates the job industries table
-    pass
+
+    lines = readFile('archive/job_details/job_industries.csv')
+    # [print(l) for l in lines]
+
+    fmt = 'INSERT INTO Job_Industry VALUES ({}, {})'
+
+    [cursor.execute(fmt.format(l[0], l[1])) for l in lines]
+    database.commit()
 
 
 def insertJobBenefitsTable():
     # Function creates the job benefits table
-    pass
+    lines = readFile('archive/job_details/benefits.csv')
+    # [print(l) for l in lines]
+
+    fmt = 'INSERT INTO Job_Benefits VALUES ({}, {}, "{}")'
+
+    [cursor.execute(fmt.format(l[0], l[1], l[2])) for l in lines]
+    database.commit()
 
 
 def insertJobSkillsTable():
     # Function creates the job skills table
-    pass
+    lines = readFile('archive/job_details/job_skills.csv')
+    # [print(l) for l in lines]
+
+    fmt = 'INSERT INTO Job_Skills VALUES ({}, "{}")'
+
+    [cursor.execute(fmt.format(l[0], l[1])) for l in lines]
+    database.commit()
 
 
 if __name__ == '__main__':

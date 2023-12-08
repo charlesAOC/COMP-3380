@@ -233,9 +233,7 @@ def createJobIndustryTable():
                    CREATE TABLE Job_Industry (
                        job_id INTEGER NOT NULL,
                        industry_id INTEGER NOT NULL,        
-                       PRIMARY KEY(job_id),
-                       FOREIGN KEY(job_id) REFERENCES Job_Postings(job_id),
-                       FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)
+                       PRIMARY KEY(job_id)
                    );
                    """)
     database.commit()
@@ -248,8 +246,7 @@ def createJobBenefitsTable():
                        job_id INTEGER NOT NULL,            
                        inferred INTEGER NOT NULL,
                        type TEXT NOT NULL,
-                       PRIMARY KEY(job_id),
-                       FOREIGN KEY(job_id) REFERENCES Job_Postings(job_id)
+                       PRIMARY KEY(job_id)
                    );
                    """)
     database.commit()
@@ -261,8 +258,7 @@ def createJobSkillsTable():
                    CREATE TABLE Job_Skills (
                        job_id INTEGER NOT NULL,             
                        skill_abr TEXT NOT NULL,
-                       PRIMARY KEY(job_id),
-                       FOREIGN KEY(job_id) REFERENCES Job_Postings(job_id)
+                       PRIMARY KEY(job_id)
                    );
                    """)
     database.commit()
