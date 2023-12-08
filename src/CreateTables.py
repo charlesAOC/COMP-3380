@@ -9,6 +9,7 @@ cursor = database.cursor()
 
 # Function creates all the tables required to run the program
 def createTables():
+    # create all tables
 
     createIndustriesTable()
     createCountriesTable()
@@ -23,27 +24,6 @@ def createTables():
     createJobIndustryTable()
     createJobBenefitsTable()
     createJobSkillsTable()
-
-
-# def createCompaniesTable():
-#     # Function creates the companies table
-#     cursor.execute("""
-#                    CREATE TABLE Companies (
-#                        company_id INTEGER NOT NULL,
-#                        name TEXT NOT NULL,
-#                        company_size INTEGER,
-#                        city_id INTEGER,
-#                        address TEXT,
-#                        industry_id INTEGER NOT NULL,
-#                        employee_count INTEGER NOT NULL,
-#                        follower_count INTEGER NOT NULL,
-#                        time_recorded REAL NOT NULL,
-#                        PRIMARY KEY(company_id),
-#                        FOREIGN KEY(city_id) REFERENCES Cities(cities_id),
-#                        FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)
-#                    );
-#                    """)
-#     database.commit()
 
 
 def createCompaniesTable():
@@ -150,38 +130,6 @@ def createCompanySpecialtyTable():
     database.commit()
 
 
-# def createJobPostingsTable():
-#     # Function creates the job postings table
-
-#     cursor.execute("""
-#                    CREATE TABLE Job_Postings (
-#                        job_id INTEGER NOT NULL,
-#                        currency TEXT NOT NULL,
-#                        applies INTEGER NOT NULL,
-#                        work_type TEXT NOT NULL,
-#                        expiry REAL NOT NULL,
-#                        pay_period TEXT NOT NULL,
-#                        location TEXT NOT NULL,
-#                        company_id INTEGER NOT NULL,
-#                        original_listed_time REAL NOT NULL,
-#                        listed_time REAL NOT NULL,
-#                        med_salary INTEGER NOT NULL,
-#                        remote_allowed INTEGER NOT NULL,
-#                        views INTEGER NOT NULL,
-#                        formatted_work_type TEXT NOT NULL,
-#                        application_type TEXT NOT NULL,
-#                        max_salary INTEGER NOT NULL,
-#                        min_salary INTEGER NOT NULL,
-#                        skill_desc TEXT NOT NULL,
-#                        sponsored INTEGER NOT NULL,
-#                        closed_time REAL NOT NULL,
-#                        formatted_experience_level TEXT NOT NULL,
-#                        compensation_type TEXT NOT NULL,
-#                        PRIMARY KEY(job_id),
-#                        FOREIGN KEY(company_id) REFERENCES Companies(company_id)
-#                    );
-#                    """)
-#     database.commit()
 def createJobPostingsTable():
     # Function creates the job postings table
 
@@ -266,4 +214,3 @@ def createJobSkillsTable():
 
 if __name__ == '__main__':
     createTables()
-    # insertTables()

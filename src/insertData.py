@@ -8,6 +8,8 @@ cursor = database.cursor()
 
 
 def insertTables():
+    # create all tables
+
     insertIndustriesTable()
     insertCountriesTable()
     insertStatesTable()
@@ -22,8 +24,6 @@ def insertTables():
     insertJobBenefitsTable()
     insertJobSkillsTable()
 
-    pass
-
 
 def readFile(filename: str):
     # reads files
@@ -32,7 +32,6 @@ def readFile(filename: str):
     with open(filename, encoding="utf8") as f:
         lines = f.readlines()
         lines = [l.strip().split(',') for l in lines]
-        # [print(l) for l in lines]
 
     return lines[1:]
 
@@ -343,7 +342,6 @@ def insertJobPostingsTable():
         views = l[9] if l[9] != '' else 'NULL'
         fmtWorkType = l[10]
         appType = l[11]
-        # skillDesc = l[12]
         sponsored = l[12]
         closedTime = l[13] if l[13] != '' else 'NULL'
         formattedExpLvl = l[14]
