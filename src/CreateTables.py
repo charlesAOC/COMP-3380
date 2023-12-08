@@ -11,26 +11,38 @@ cursor = database.cursor()
 def createTables():
 
     createIndustriesTable()
-
     createCountriesTable()
-
     createStatesTable()
-
     createCitiesTable()
-
+    createCompanyCountsTable()
+    createCompanyIndustriesTable()
     createCompaniesTable()
-
     createCompanySpecialtyTable()
-
     createJobPostingsTable()
-
     createJobIndustryTable()
-
     createJobBenefitsTable()
-
     createJobSkillsTable()
 
-    pass
+
+# def createCompaniesTable():
+#     # Function creates the companies table
+#     cursor.execute("""
+#                    CREATE TABLE Companies (
+#                        company_id INTEGER NOT NULL,
+#                        name TEXT NOT NULL,
+#                        company_size INTEGER,
+#                        city_id INTEGER,
+#                        address TEXT,
+#                        industry_id INTEGER NOT NULL,
+#                        employee_count INTEGER NOT NULL,
+#                        follower_count INTEGER NOT NULL,
+#                        time_recorded REAL NOT NULL,
+#                        PRIMARY KEY(company_id),
+#                        FOREIGN KEY(city_id) REFERENCES Cities(cities_id),
+#                        FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)
+#                    );
+#                    """)
+#     database.commit()
 
 
 def createCompaniesTable():
@@ -42,13 +54,35 @@ def createCompaniesTable():
                        company_size INTEGER,
                        city_id INTEGER,
                        address TEXT,
-                       industry_id INTEGER NOT NULL,
+                       PRIMARY KEY(company_id),
+                       FOREIGN KEY(city_id) REFERENCES Cities(cities_id)
+                   );
+                   """)
+    database.commit()
+
+
+def createCompanyCountsTable():
+    # Function creates the companies table
+    cursor.execute("""
+                   CREATE TABLE Company_Count (
+                       company_id INTEGER NOT NULL,
                        employee_count INTEGER NOT NULL,
                        follower_count INTEGER NOT NULL,
-                       time_recorded REAL NOT NULL,
+                       time_recorded INTEGER NOT NULL,
+                       PRIMARY KEY(company_id)                       
+                   );
+                   """)
+    database.commit()
+
+
+def createCompanyIndustriesTable():
+    # Function creates the companies table
+    cursor.execute("""
+                   CREATE TABLE Company_Industries (
+                       company_id INTEGER NOT NULL,
+                       industry_id INTEGER,
                        PRIMARY KEY(company_id),
-                       FOREIGN KEY(city_id) REFERENCES Cities(cities_id),
-                       FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)
+                       FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)                    
                    );
                    """)
     database.commit()
@@ -59,7 +93,7 @@ def createIndustriesTable():
     cursor.execute("""
                    CREATE TABLE Industries (
                        industry_id INTEGER NOT NULL,
-                       industry TEXT NOT NULL,
+                       industry TEXT,
                        PRIMARY KEY(industry_id)
                    );
                    """)
@@ -70,10 +104,9 @@ def createCitiesTable():
     # Function creates the cities table
     cursor.execute("""
                    CREATE TABLE Cities (
-                       cities_id INTEGER NOT NULL,
+                       cities_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                        city TEXT NOT NULL,
-                       state_id INTEGER NOT NULL,    
-                       PRIMARY KEY(cities_id),
+                       state_id INTEGER,    
                        FOREIGN KEY(state_id) REFERENCES States(state_id)
                    );
                    """)
@@ -84,10 +117,9 @@ def createStatesTable():
     # Function creates the states table
     cursor.execute("""
                    CREATE TABLE States (
-                       states_id INTEGER NOT NULL,
+                       states_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                        state TEXT NOT NULL,
-                       country_id INTEGER NOT NULL,    
-                       PRIMARY KEY(states_id),
+                       country_id INTEGER,    
                        FOREIGN KEY(country_id) REFERENCES Countries(country_id)
                    );
                    """)
@@ -98,9 +130,8 @@ def createCountriesTable():
     # Function creates the Countries table
     cursor.execute("""
                    CREATE TABLE Countries (
-                       country_id INTEGER NOT NULL,
-                       country TEXT NOT NULL,
-                       PRIMARY KEY(country_id)
+                       country_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                       country TEXT NOT NULL UNIQUE
                    );
                    """)
     database.commit()
@@ -192,3 +223,8 @@ def createJobSkillsTable():
                    );
                    """)
     database.commit()
+
+
+if __name__ == '__main__':
+    createTables()
+    # insertTables()
