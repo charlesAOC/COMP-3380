@@ -18,6 +18,7 @@ def createTables():
     createCompanyIndustriesTable()
     createCompaniesTable()
     createCompanySpecialtyTable()
+    createSalariesTable()
     createJobPostingsTable()
     createJobIndustryTable()
     createJobBenefitsTable()
@@ -149,35 +150,78 @@ def createCompanySpecialtyTable():
     database.commit()
 
 
+# def createJobPostingsTable():
+#     # Function creates the job postings table
+
+#     cursor.execute("""
+#                    CREATE TABLE Job_Postings (
+#                        job_id INTEGER NOT NULL,
+#                        currency TEXT NOT NULL,
+#                        applies INTEGER NOT NULL,
+#                        work_type TEXT NOT NULL,
+#                        expiry REAL NOT NULL,
+#                        pay_period TEXT NOT NULL,
+#                        location TEXT NOT NULL,
+#                        company_id INTEGER NOT NULL,
+#                        original_listed_time REAL NOT NULL,
+#                        listed_time REAL NOT NULL,
+#                        med_salary INTEGER NOT NULL,
+#                        remote_allowed INTEGER NOT NULL,
+#                        views INTEGER NOT NULL,
+#                        formatted_work_type TEXT NOT NULL,
+#                        application_type TEXT NOT NULL,
+#                        max_salary INTEGER NOT NULL,
+#                        min_salary INTEGER NOT NULL,
+#                        skill_desc TEXT NOT NULL,
+#                        sponsored INTEGER NOT NULL,
+#                        closed_time REAL NOT NULL,
+#                        formatted_experience_level TEXT NOT NULL,
+#                        compensation_type TEXT NOT NULL,
+#                        PRIMARY KEY(job_id),
+#                        FOREIGN KEY(company_id) REFERENCES Companies(company_id)
+#                    );
+#                    """)
+#     database.commit()
 def createJobPostingsTable():
     # Function creates the job postings table
 
     cursor.execute("""
                    CREATE TABLE Job_Postings (
                        job_id INTEGER NOT NULL,
-                       currency TEXT NOT NULL,
-                       applies INTEGER NOT NULL,
+                       applies INTEGER,
                        work_type TEXT NOT NULL,
-                       expiry REAL NOT NULL,
-                       pay_period TEXT NOT NULL,
+                       expiry INTEGER NOT NULL,
                        location TEXT NOT NULL,
-                       company_id INTEGER NOT NULL,          
-                       original_listed_time REAL NOT NULL,
-                       listed_time REAL NOT NULL,
-                       med_salary INTEGER NOT NULL,
-                       remote_allowed INTEGER NOT NULL,
-                       views INTEGER NOT NULL,
+                       company_id INTEGER,          
+                       original_listed_time INTEGER NOT NULL,
+                       listed_time INTEGER NOT NULL,
+                       remote_allowed INTEGER,
+                       views INTEGER,
                        formatted_work_type TEXT NOT NULL,
                        application_type TEXT NOT NULL,
-                       max_salary INTEGER NOT NULL,
-                       min_salary INTEGER NOT NULL,
-                       skill_desc TEXT NOT NULL,
                        sponsored INTEGER NOT NULL,
-                       closed_time REAL NOT NULL,
-                       formatted_experience_level TEXT NOT NULL,
+                       closed_time INTEGER,
+                       formatted_experience_level TEXT,
+                       PRIMARY KEY(job_id)
+                   );
+                   """)
+    database.commit()
+
+
+def createSalariesTable():
+    # Function creates the job postings table
+
+    cursor.execute("""
+                   CREATE TABLE Salaries (
+                       salary_id INTEGER NOT NULL,
+                       job_id INTEGER NOT NULL,
+                       max_salary INTEGER,
+                       med_salary INTEGER,
+                       min_salary INTEGER,
+                       pay_period TEXT NOT NULL,
+                       currency TEXT NOT NULL,
                        compensation_type TEXT NOT NULL,
-                       PRIMARY KEY(job_id),
-                       FOREIGN KEY(company_id) REFERENCES Companies(company_id)
+                       PRIMARY KEY(salary_id)
                    );
                    """)
     database.commit()

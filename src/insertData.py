@@ -8,14 +8,17 @@ cursor = database.cursor()
 
 
 def insertTables():
-    insertIndustriesTable()
-    insertCountriesTable()
-    insertStatesTable()
-    insertCitiesTable()
-    insertCompanyIndustriesTable()
-    insertCompanyCountsTable()
-    insertCompaniesTable()
-    insertCompanySpecialtyTable()
+    # insertIndustriesTable()
+    # insertCountriesTable()
+    # insertStatesTable()
+    # insertCitiesTable()
+    # insertCompanyIndustriesTable()
+    # insertCompanyCountsTable()
+    # insertCompaniesTable()
+    # insertCompanySpecialtyTable()
+    # insertSalariesTable()
+
+    insertJobPostingsTable()
 
     pass
 
@@ -294,9 +297,63 @@ def insertCompanySpecialtyTable():
     database.commit()
 
 
+def insertSalariesTable():
+    lines = readFile('archive/job_details/salaries.csv')
+
+    fmt = 'INSERT INTO Salaries VALUES ({}, {}, {}, {}, {}, "{}", "{}", "{}")'
+
+    for l in lines:
+        # print(l)
+        salaryId = l[0]
+        jobId = l[1]
+        maxSalary = l[2] if l[2] != '' else 'NULL'
+        medSalary = l[3] if l[3] != '' else 'NULL'
+        minSalary = l[4] if l[4] != '' else 'NULL'
+        payPeriod = l[5]
+        currency = l[6]
+        compType = l[7]
+
+        # print(fmt.format(salaryId, jobId, maxSalary, medSalary,
+        #       minSalary, payPeriod, currency, compType))
+        cursor.execute(fmt.format(salaryId, jobId, maxSalary, medSalary,
+                                  minSalary, payPeriod, currency, compType))
+    database.commit()
+
+
 def insertJobPostingsTable():
     # Function creates the job postings table
-    pass
+    lines = readFile('archive/job_postings.csv')
+    # [print(l) for l in lines]
+
+    fmt = 'INSERT INTO Job_Postings VALUES ({}, {}, "{}", {}, "{}", {}, {}, {}, {}, {}, "{}", "{}", {}, {}, "{}");'
+    fmt_exp = 'INSERT INTO Job_Postings VALUES ({}, {}, "{}", {}, "{}", {}, {}, {}, {}, {}, "{}", "{}", {}, {}, NULL);'
+
+    for l in lines:
+        jobId = l[0]
+        applies = l[1] if l[1] != '' else 'NULL'
+        workTypes = l[2]
+        expiry = l[3]
+        location = l[4]
+        company = l[5] if l[5] != '' else 'NULL'
+        origListedTime = l[6]
+        listedTime = l[7]
+        remote = l[8] if l[8] != '' else 'NULL'
+        views = l[9] if l[9] != '' else 'NULL'
+        fmtWorkType = l[10]
+        appType = l[11]
+        # skillDesc = l[12]
+        sponsored = l[12]
+        closedTime = l[13] if l[13] != '' else 'NULL'
+        formattedExpLvl = l[14]
+
+        if formattedExpLvl != '':
+            cursor.execute(fmt_exp.format(jobId, applies, workTypes,
+                                          expiry, location, company, origListedTime, listedTime, remote, views, fmtWorkType, appType,  sponsored, closedTime))
+        else:
+            cursor.execute(fmt.format(jobId, applies, workTypes,
+                                      expiry, location, company, origListedTime, listedTime, remote, views, fmtWorkType, appType,  sponsored, closedTime, formattedExpLvl))
+
+    database.commit()
 
 
 def insertJobIndustryTable():
