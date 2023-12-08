@@ -8,12 +8,13 @@ cursor = database.cursor()
 
 
 def insertTables():
-    # insertIndustriesTable()
-    # insertCountriesTable()
-    # insertStatesTable()
-    # insertCitiesTable()
-    # insertCompanyIndustriesTable()
-    # insertCompanyCountsTable()
+    insertIndustriesTable()
+    insertCountriesTable()
+    insertStatesTable()
+    insertCitiesTable()
+    insertCompanyIndustriesTable()
+    insertCompanyCountsTable()
+    insertCompaniesTable()
 
     pass
 
@@ -32,24 +33,65 @@ def readFile(filename: str):
 
 def insertCompaniesTable():
     # Function creates the companies table
-    pass
+    lines = readFile('archive/company_details/companies.csv')
+
+    fmt = 'INSERT INTO Companies VALUES ({}, "{}", {}, {}, "{}");'
+    fmt_null = 'INSERT INTO Companies VALUES ({}, "{}", {}, {}, NULL);'
+
+    for l in lines:
+        company_id = l[0]
+        name = l[1]
+        companySize = l[2] if l[2] != '' else 'NULL'
+        state = l[3]
+        country = l[4]
+        city = l[5]
+        address = l[6].strip()
+
+        if company_id == '91098929':
+            print('hi')
+
+        if city != '':
+            # get country_id
+            country = getCountryID(country) if country != '' else ''
+
+            # get state_id
+            state = getStateId(state, country) if state else ''
+
+            # get state_id
+            city = getCityId(city, state)
+
+            # reset to null if city id not found
+            city = city if city != '' else 'NULL'
+
+        else:
+            city = 'NULL'
+
+        if address != '':
+            # print(fmt.format(company_id, name,
+            #                  companySize, city, address))
+            cursor.execute(fmt.format(company_id, name,
+                                      companySize, city, address))
+        else:
+            # print(fmt_null.format(
+            #     company_id, name, companySize, city))
+            cursor.execute(fmt_null.format(
+                company_id, name, companySize, city))
+
+    database.commit()
 
 
 def getIndustriesId(industry: str):
     result = ''
-    # fmt =
 
     if industry != '':
         command = 'SELECT industry_id FROM Industries WHERE industry = "{}";'.format(
             industry)
         cursor.execute(command)
 
-        result = cursor.fetchone()
+        tempRes = cursor.fetchone()
 
-        if (result != None and len(result) > 0):
-            result = result[0]
-        elif result == None:
-            result = ''
+        if (tempRes != None and len(tempRes) > 0):
+            result = tempRes[0]
 
         # print('result - ', result)
 
@@ -94,6 +136,27 @@ def insertIndustriesTable():
      for l in lines]
 
     database.commit()
+
+
+def getCityId(city: str, stateId: str):
+    result = ''
+
+    if stateId != '':
+        command = 'SELECT cities_id FROM Cities WHERE city = "{}" AND state_id = {};'.format(
+            city, stateId)
+    else:
+        command = 'SELECT cities_id FROM Cities WHERE city = "{}" AND state_id = NULL;'.format(
+            city, stateId)
+
+    cursor.execute(command)
+
+    tempResult = cursor.fetchone()
+
+    if (tempResult != None and len(tempResult) > 0):
+        # print(temp[0])
+        result = tempResult[0]
+
+    return result
 
 
 def insertCitiesTable():
