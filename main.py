@@ -1,5 +1,5 @@
 import sqlite3
-from src.CreateTables import createTables
+from src.CreateTables import createTables, dropTables
 from src.insertData import insertTables
 from src.basicQuery import showAllTables, exposeTable
 
@@ -12,6 +12,7 @@ cursor = database.cursor()
 
 
 def main():
+
     # created the tables
     createTables()
 
@@ -20,6 +21,9 @@ def main():
 
     # starts the command line user program loop
     runCommandLine()
+
+    # drop tables at the end of each run
+    dropTables()
 
 
 def runCommandLine():

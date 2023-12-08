@@ -7,6 +7,30 @@ database = sqlite3.connect('linkedIn.db')
 cursor = database.cursor()
 
 
+def dropTables():
+    # function drops the tables if they exists
+
+    def dropTableHelper(tableName: str):
+        # helper function to drop tables
+        fmt = 'DROP TABLE {};'
+        cursor.execute(fmt.format(tableName))
+        database.commit()
+
+    dropTableHelper('Cities')
+    dropTableHelper('Companies')
+    dropTableHelper('Company_Count')
+    dropTableHelper('Company_Industries')
+    dropTableHelper('Company_Speciality')
+    dropTableHelper('Countries')
+    dropTableHelper('Industries')
+    dropTableHelper('Job_Benefits')
+    dropTableHelper('Job_Industry')
+    dropTableHelper('Job_Postings')
+    dropTableHelper('Job_Skills')
+    dropTableHelper('Salaries')
+    dropTableHelper('States')
+
+
 # Function creates all the tables required to run the program
 def createTables():
     # create all tables
