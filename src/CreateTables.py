@@ -9,25 +9,17 @@ cursor = database.cursor()
 
 # Function creates all the tables required to run the program
 def createTables():
-
     createIndustriesTable()
-
     createCountriesTable()
-
     createStatesTable()
-
     createCitiesTable()
-
+    createCompanyCountsTable()
+    createCompanyIndustriesTable()
     createCompaniesTable()
-
     createCompanySpecialtyTable()
-
     createJobPostingsTable()
-
     createJobIndustryTable()
-
     createJobBenefitsTable()
-
     createJobSkillsTable()
 
     pass
@@ -49,6 +41,33 @@ def createCompaniesTable():
                        PRIMARY KEY(company_id),
                        FOREIGN KEY(city_id) REFERENCES Cities(cities_id),
                        FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)
+                   );
+                   """)
+    database.commit()
+
+
+def createCompanyCountsTable():
+    # Function creates the companies table
+    cursor.execute("""
+                   CREATE TABLE Company_Count (
+                       company_id INTEGER NOT NULL,
+                       employee_count INTEGER NOT NULL,
+                       follower_count INTEGER NOT NULL,
+                       time_recorded INTEGER NOT NULL,
+                       PRIMARY KEY(company_id)                       
+                   );
+                   """)
+    database.commit()
+
+
+def createCompanyIndustriesTable():
+    # Function creates the companies table
+    cursor.execute("""
+                   CREATE TABLE Company_Industries (
+                       company_id INTEGER NOT NULL,
+                       industry_id INTEGER,
+                       PRIMARY KEY(company_id),
+                       FOREIGN KEY(industry_id) REFERENCES Industries(industry_id)                    
                    );
                    """)
     database.commit()

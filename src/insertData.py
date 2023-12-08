@@ -11,8 +11,11 @@ def insertTables():
     # insertIndustriesTable()
     # insertCountriesTable()
     # insertStatesTable()
+    # insertCitiesTable()
+    # insertCompanyIndustriesTable()
+    # insertCompanyCountsTable()
 
-    insertCitiesTable()
+    pass
 
 
 def readFile(filename: str):
@@ -27,10 +30,57 @@ def readFile(filename: str):
     return lines[1:]
 
 
-# 'archive/maps/industries.csv'
 def insertCompaniesTable():
     # Function creates the companies table
     pass
+
+
+def getIndustriesId(industry: str):
+    result = ''
+    # fmt =
+
+    if industry != '':
+        command = 'SELECT industry_id FROM Industries WHERE industry = "{}";'.format(
+            industry)
+        cursor.execute(command)
+
+        result = cursor.fetchone()
+
+        if (result != None and len(result) > 0):
+            result = result[0]
+        elif result == None:
+            result = ''
+
+        # print('result - ', result)
+
+    return result
+
+
+def insertCompanyIndustriesTable():
+    # Function creates the companies_Industry table
+    lines = readFile('archive/company_details/company_industries.csv')
+
+    fmt = 'INSERT INTO Company_Industries VALUES ({}, {});'
+    fmt_null = 'INSERT INTO Company_Industries VALUES ({}, NULL);'
+
+    for l in lines:
+        industryId = getIndustriesId(l[1])
+
+        if industryId != '':
+            cursor.execute(fmt.format(l[0], industryId))
+        else:
+            cursor.execute(fmt_null.format(l[0]))
+    database.commit()
+
+
+def insertCompanyCountsTable():
+    # Function creates the companies_count table
+    lines = readFile('archive/company_details/employee_counts.csv')
+
+    fmt = 'INSERT INTO Company_Count VALUES ({}, {}, {}, {});'
+
+    [cursor.execute(fmt.format(l[0], l[1], l[2], l[3])) for l in lines]
+    database.commit()
 
 
 def insertIndustriesTable():
