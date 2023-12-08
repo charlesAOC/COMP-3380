@@ -59,7 +59,7 @@ def createIndustriesTable():
     cursor.execute("""
                    CREATE TABLE Industries (
                        industry_id INTEGER NOT NULL,
-                       industry TEXT NOT NULL,
+                       industry TEXT,
                        PRIMARY KEY(industry_id)
                    );
                    """)
@@ -98,9 +98,8 @@ def createCountriesTable():
     # Function creates the Countries table
     cursor.execute("""
                    CREATE TABLE Countries (
-                       country_id INTEGER NOT NULL,
-                       country TEXT NOT NULL,
-                       PRIMARY KEY(country_id)
+                       country_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                       country TEXT NOT NULL UNIQUE
                    );
                    """)
     database.commit()
@@ -192,3 +191,8 @@ def createJobSkillsTable():
                    );
                    """)
     database.commit()
+
+
+if __name__ == '__main__':
+    createTables()
+    # insertTables()
