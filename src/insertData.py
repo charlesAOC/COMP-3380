@@ -15,6 +15,7 @@ def insertTables():
     insertCompanyIndustriesTable()
     insertCompanyCountsTable()
     insertCompaniesTable()
+    insertCompanySpecialtyTable()
 
     pass
 
@@ -46,9 +47,6 @@ def insertCompaniesTable():
         country = l[4]
         city = l[5]
         address = l[6].strip()
-
-        if company_id == '91098929':
-            print('hi')
 
         if city != '':
             # get country_id
@@ -287,7 +285,13 @@ def insertCountriesTable():
 
 def insertCompanySpecialtyTable():
     # Function creates the company speciality table
-    pass
+    lines = readFile('archive/company_details/company_specialities.csv')
+
+    fmt = 'INSERT INTO Company_Speciality VALUES ({}, "{}");'
+
+    # [print(fmt.format(l[0], l[1])) for l in lines]
+    [cursor.execute(fmt.format(l[0], l[1])) for l in lines]
+    database.commit()
 
 
 def insertJobPostingsTable():

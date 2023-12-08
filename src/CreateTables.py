@@ -143,8 +143,7 @@ def createCompanySpecialtyTable():
                    CREATE TABLE Company_Speciality (
                        company_id INTEGER NOT NULL,             
                        speciality TEXT NOT NULL,
-                       PRIMARY KEY(company_id),
-                       FOREIGN KEY(company_id) REFERENCES Companies(company_id)
+                       PRIMARY KEY(company_id)
                    );
                    """)
     database.commit()
