@@ -10,6 +10,8 @@ cursor = database.cursor()
 def insertTables():
     # create all tables
 
+    print('Inserting values into tables...')
+
     insertIndustriesTable()
     insertCountriesTable()
     insertStatesTable()
@@ -17,12 +19,15 @@ def insertTables():
     insertCompanyIndustriesTable()
     insertCompanyCountsTable()
     insertCompaniesTable()
+    print('Still inserting values into tables...')
     insertCompanySpecialtyTable()
     insertSalariesTable()
     insertJobPostingsTable()
     insertJobIndustryTable()
     insertJobBenefitsTable()
     insertJobSkillsTable()
+
+    print('Values inserted into tables')
 
 
 def readFile(filename: str):

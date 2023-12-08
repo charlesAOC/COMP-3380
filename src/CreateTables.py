@@ -11,6 +11,8 @@ cursor = database.cursor()
 def createTables():
     # create all tables
 
+    print('Creating tables...')
+
     createIndustriesTable()
     createCountriesTable()
     createStatesTable()
@@ -24,6 +26,8 @@ def createTables():
     createJobIndustryTable()
     createJobBenefitsTable()
     createJobSkillsTable()
+
+    print('Tables created successfully')
 
 
 def createCompaniesTable():
