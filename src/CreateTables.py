@@ -84,10 +84,9 @@ def createStatesTable():
     # Function creates the states table
     cursor.execute("""
                    CREATE TABLE States (
-                       states_id INTEGER NOT NULL,
+                       states_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                        state TEXT NOT NULL,
-                       country_id INTEGER NOT NULL,    
-                       PRIMARY KEY(states_id),
+                       country_id INTEGER,    
                        FOREIGN KEY(country_id) REFERENCES Countries(country_id)
                    );
                    """)

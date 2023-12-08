@@ -9,7 +9,8 @@ cursor = database.cursor()
 
 def insertTables():
     # insertIndustriesTable()
-    insertCountriesTable()
+    # insertCountriesTable()
+    insertStatesTable()
     pass
 
 
@@ -17,7 +18,7 @@ def readFile(filename: str):
     # reads files
     lines = ''
 
-    with open(filename) as f:
+    with open(filename, encoding="utf8") as f:
         lines = f.readlines()
         lines = [l.strip().split(',') for l in lines]
         # [print(l) for l in lines]
@@ -50,7 +51,33 @@ def insertCitiesTable():
 
 def insertStatesTable():
     # Function creates the states table
-    pass
+    lines = readFile('archive/company_details/states_country.csv')
+    lines = lines[1:]
+
+    fmt = 'INSERT INTO States(state, country_id) VALUES ("{}", "{}");'
+
+    # format for state-country pair
+    setfmt = "{}-{}"
+
+    # set to find unique states
+    tempSet = set()
+
+    for l in lines:
+        state = l[0]
+        country = l[1] if l[1] != '' else 'NULL'
+
+        # if the states col is not blank
+        if (state != ''):
+            entry = setfmt.format(state, country)
+
+            # add it to set then add to table
+            if (entry not in tempSet):
+                tempSet.add(entry)
+                # print(fmt.format(l[0], l[1] if l[1] != '' else 'NULL'))
+                cursor.execute(fmt.format(
+                    l[0], l[1] if l[1] != '' else 'NULL'))
+
+    database.commit()
 
 
 def insertCountriesTable():
