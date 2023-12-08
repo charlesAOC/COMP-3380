@@ -70,10 +70,9 @@ def createCitiesTable():
     # Function creates the cities table
     cursor.execute("""
                    CREATE TABLE Cities (
-                       cities_id INTEGER NOT NULL,
+                       cities_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                        city TEXT NOT NULL,
-                       state_id INTEGER NOT NULL,    
-                       PRIMARY KEY(cities_id),
+                       state_id INTEGER,    
                        FOREIGN KEY(state_id) REFERENCES States(state_id)
                    );
                    """)

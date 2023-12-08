@@ -10,7 +10,8 @@ cursor = database.cursor()
 def insertTables():
     # insertIndustriesTable()
     # insertCountriesTable()
-    insertStatesTable()
+    # insertStatesTable()
+    insertCitiesTable()
     pass
 
 
@@ -23,7 +24,7 @@ def readFile(filename: str):
         lines = [l.strip().split(',') for l in lines]
         # [print(l) for l in lines]
 
-    return lines
+    return lines[1:]
 
 
 # 'archive/maps/industries.csv'
@@ -35,7 +36,6 @@ def insertCompaniesTable():
 def insertIndustriesTable():
     # Function creates the company industry table
     lines = readFile('archive/maps/industries.csv')
-    lines = lines[1:]
 
     fmt = 'INSERT INTO Industries VALUES ({}, "{}");'
 
@@ -46,13 +46,37 @@ def insertIndustriesTable():
 
 def insertCitiesTable():
     # Function creates the cities table
-    pass
+    lines = readFile('archive/company_details/city_state.csv')
+
+    fmt = 'INSERT INTO Cities(city, state_id) VALUES ("{}", "{}");'
+
+    # format for state-country pair
+    setfmt = "{}-{}"
+
+    # set to find unique states
+    tempSet = set()
+
+    for l in lines:
+        city = l[0]
+        state = l[1] if l[1] != '' else 'NULL'
+
+        # if the states col is not blank
+        if (city != ''):
+            entry = setfmt.format(city, state)
+
+            # add it to set then add to table
+            if (entry not in tempSet):
+                tempSet.add(entry)
+                # print(fmt.format(l[0], l[1] if l[1] != '' else 'NULL'))
+                cursor.execute(fmt.format(
+                    l[0], l[1] if l[1] != '' else 'NULL'))
+
+    database.commit()
 
 
 def insertStatesTable():
     # Function creates the states table
     lines = readFile('archive/company_details/states_country.csv')
-    lines = lines[1:]
 
     fmt = 'INSERT INTO States(state, country_id) VALUES ("{}", "{}");'
 
@@ -83,7 +107,6 @@ def insertStatesTable():
 def insertCountriesTable():
     # Function creates the Countries table
     lines = readFile('archive/company_details/countries.csv')
-    lines = lines[1:]
 
     fmt = 'INSERT INTO Countries(country) VALUES ("{}");'
 
